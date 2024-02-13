@@ -1,0 +1,27 @@
+# Server配置
+server:
+  port: 2001
+
+# Spring配置
+spring:
+  application:
+    name: yugi-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: dev
+
+    gateway:
+      routes:
+        - id: yugi
+          uri: lb://yugi
+#          uri: http://127.0.0.1:2000
+          predicates:
+            - Path=/yugi/**
+          filters:
+            - StripPrefix=1
+      discovery:
+        locator:
+          enabled: true
+
